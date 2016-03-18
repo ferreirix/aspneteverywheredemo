@@ -15,19 +15,16 @@ namespace whereyouat
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvcCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
             app.UseIISPlatformHandler();
-            app.UseStaticFiles();
-    
+            app.UseFileServer();
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Where you at?");
-            });
+            app.UseMvc();
         }
 
         // Entry point for the application.
