@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "About-Environment Configuration";
+}
+<h2>@ViewData["Title"]</h2>
+
+<b>HostName:</b> @ViewData["HOSTNAME"]<br />
+<b>OS:</b> @ViewData["OS"]<br />
+<b>Processor Architecture:</b> @ViewData["PROCESSORARCH"]<br />
+<b>ASP.NET Hosting Environment:</b> @ViewData["HOSTING_ENVIRONMENT"]<br />
+
+<h3>Environment Variables:</h3>
+@Html.Raw(ViewData["ENV_VARS"])
+<br />

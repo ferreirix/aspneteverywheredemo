@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  whereyouat:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile.release
+      args:
+      - CONTAINER_PORT=${WHEREYOUAT_PORT}
+      - SERVER_URLS=http://*:${WHEREYOUAT_PORT}
+    ports:
+    - "${HOST_PORT}:${WHEREYOUAT_PORT}"

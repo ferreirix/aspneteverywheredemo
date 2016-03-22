@@ -30,7 +30,7 @@ namespace whereyouat.Controllers
         public async Task AddLocation(Location location)
         {
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.ConnectionString);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
             var tableClient = storageAccount.CreateCloudTableClient();
 
@@ -51,7 +51,7 @@ namespace whereyouat.Controllers
         [HttpGet("/locations")]
         public async Task<JsonResult> GetLocations()
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.ConnectionString);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 

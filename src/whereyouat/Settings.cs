@@ -3,6 +3,6 @@ namespace whereyouat
 {
     public class Settings
     {
-        public string ConnectionString {get;set;}
+        public string LocationConnectionString {get;set;}
     }
 }
