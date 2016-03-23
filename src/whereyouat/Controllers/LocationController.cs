@@ -26,7 +26,7 @@ namespace whereyouat.Controllers
         }
         
         [HttpPut("/locations")]
-        public async Task AddLocation([FromBody]Location location)
+        public async Task AddLocation([FromForm]Location location)
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
