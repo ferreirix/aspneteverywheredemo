@@ -36,7 +36,7 @@ namespace whereyouat.Controllers
 
             await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(_settings.Cloud_Name);
+            var locEntity = new LocationEntity(_settings.Cloud_Name ?? "Unknown");
 
             locEntity.longitude = location.longitude.ToString();
             locEntity.latitude = location.latitude.ToString();
