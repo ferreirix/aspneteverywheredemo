@@ -11,14 +11,12 @@ namespace whereyouat.Models
         public LocationEntity() { }
         public LocationEntity(string cloud_name)
         {
-            loc_id = Guid.NewGuid().ToString();
             this.cloud_name = cloud_name;
 
-            this.RowKey = this.loc_id;
+            this.RowKey = Guid.NewGuid().ToString();
             this.PartitionKey = this.cloud_name;
         }
 
-        public string loc_id {get;set;}
         public string longitude { get; set; }
         public string latitude { get; set; }
         public string cloud_name { get; set; }

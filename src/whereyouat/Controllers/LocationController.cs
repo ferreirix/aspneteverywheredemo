@@ -26,9 +26,8 @@ namespace whereyouat.Controllers
         }
         
         [HttpPut("/locations")]
-        public async Task AddLocation(Location location)
+        public async Task AddLocation([FromBody]Location location)
         {
-
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
             var tableClient = storageAccount.CreateCloudTableClient();
@@ -37,18 +36,18 @@ namespace whereyouat.Controllers
 
             await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(_settings.Cloud_Name);
+            var locEntity = new LocationEntity(_settings.Cloud_Name ?? "Unknown");
 
             locEntity.longitude = location.longitude.ToString();
             locEntity.latitude = location.latitude.ToString();
             locEntity.host = _settings.Docker_Host;
-            locEntity.container = _settings.Container_id;
+            locEntity.container = _settings.HostName;
 
             TableOperation insertOperation = TableOperation.Insert(locEntity);
 
             await table.ExecuteAsync(insertOperation);
         }
-        
+
         [HttpGet("/locations")]
         public async Task<JsonResult> GetLocations()
         {
