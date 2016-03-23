@@ -9,6 +9,5 @@ namespace whereyouat.Models
     {
         public float longitude { get; set; }
         public float latitude { get; set; }
-        public string city_name { get; set; }
     }
 }

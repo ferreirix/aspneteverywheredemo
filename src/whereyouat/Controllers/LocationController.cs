@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.OptionsModel;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 using whereyouat.Models;
 
@@ -38,10 +37,12 @@ namespace whereyouat.Controllers
 
             await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(location.city_name);
+            var locEntity = new LocationEntity(_settings.Cloud_Name);
 
             locEntity.longitude = location.longitude.ToString();
             locEntity.latitude = location.latitude.ToString();
+            locEntity.host = _settings.Docker_Host;
+            locEntity.container = _settings.Container_id;
 
             TableOperation insertOperation = TableOperation.Insert(locEntity);
 
@@ -61,7 +62,7 @@ namespace whereyouat.Controllers
 
             var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
 
-            return Json(data.Select(x=> new { latitude= x.latitude, longitude = x.longitude, city_name = x.city_name }));
+            return Json(data.Select(x=> new { latitude= x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
         }
     }
 }
