@@ -10,14 +10,15 @@
           var map;
           function getLocations() {
               var mapOptions = {
-                  credentials: "AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt"
+                  credentials: "AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt",
+                  mapTypeId: Microsoft.Maps.MapTypeId.road
               };
 
 
               map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
                   $.ajax({
                       type: "GET",
-                      url: "http://localhost:5000/locations",
+                      url: "/locations",
                       dataType: "json",
                       success: function (json) {
                           console.log(json);

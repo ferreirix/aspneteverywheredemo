@@ -17,7 +17,7 @@ function showPosition(position) {
     var xhr = new XMLHttpRequest();
     var params = "latitude=" + lat + "&longitude=" + lon;
     console.log("Params: " + params);
-    xhr.open('PUT', 'http://localhost:5000/locations', true);
+    xhr.open('PUT', '/locations', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function () {
         console.log("Response:" & this.responseText);
