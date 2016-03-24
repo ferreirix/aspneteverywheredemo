@@ -2,31 +2,46 @@
    <head>
       <title></title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+       <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
 
       <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
       <script type="text/javascript">
-         
-         function PlotMe()
-         {
+          var map;
+          function getLocations() {
+              var mapOptions = {
+                  credentials: "AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt"
+              };
+
+
+              map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
+                  $.ajax({
+                      type: "GET",
+                      url: "http://localhost:5000/locations",
+                      dataType: "json",
+                      success: function (json) {
+                          console.log(json);
+                          $.each(json, function(i, entry){
+                             PlotUs(entry.latitude, entry.longitude, entry.cloud_name);
+                         });
+                      },
+                      error: function(err, status, errortext){
+                          console.log(errortext);
+                      }
+                  });
+              }
+
+          function PlotUs(latitude,longitude, pinlabel)
+          {
             
-        
-            var mapOptions = {credentials:"AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt"};
-
-         
-            var map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
-
-            
-            var geoLocationProvider = new Microsoft.Maps.GeoLocationProvider(map);
-
-        
-            geoLocationProvider.getCurrentPosition();
-          
+              console.log(latitude + ' ' + longitude);
+              var newPin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude),{text: pinlabel });
+             map.entities.push(newPin);
          }
-
+         $().ready(getLocations);
       </script>
    </head>
-   <body onload="PlotMe();">
-      <div id='mapDiv' style="position:relative; width:2000px; height:2000px;"></div>       
+   <body>
+      <div id='mapDiv' style="position:relative; width:1000px; height:1000px;"></div>       
    </body>
 </html>

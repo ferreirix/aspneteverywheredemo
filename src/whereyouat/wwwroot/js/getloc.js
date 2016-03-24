@@ -22,5 +22,6 @@ function showPosition(position) {
     xhr.onreadystatechange = function () {
         console.log("Response:" & this.responseText);
     };
-    xhr.send(params);
+    xhr.send(params); 
 }
+
