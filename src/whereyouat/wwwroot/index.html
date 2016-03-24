@@ -17,7 +17,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/animate.min.css" type="text/css">
     <link rel="stylesheet" href="css/creative.css" type="text/css">
+    <script src="js/getloc.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
 </head>
+
 
 <body id="page-top">
 
@@ -29,13 +32,13 @@
                 <h1><font color="#21A69C">Where you at ? </font></h1>
                 <hr>
                 <p><font color="#153542">ASP.NET on every Cloud </font></p>
-                <a href="#map" class="btn btn-default btn-xl wow tada"> Tell me</a>
+                <!--<a href="#map" class="btn btn-default btn-xl wow tada"> Tell me</a>-->
+                <!--Put Geo data onClick Ugly JS Bootstrap JQuery cluster it works though-->
+                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada"> Tell me</a>
             </div>
         </div>
     </header>
-
-
-    <section class="bg-primary" id="map">
+        <section class="bg-primary" id="map">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -64,37 +67,37 @@
                     <div class="service-box">
                         <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>
                         <h3>Azure ACS </h3>
-                   
+
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>
                         <h3>Amazon EC2 </h3>
-                     
+
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>
                         <h3>Docker</h3>
-                  
+
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-google wow bounceIn text-primary" data-wow-delay=".3s"></i>
                         <h3> Google Kubernetes</h3>
-        
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    
-    
-    
+
+
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
