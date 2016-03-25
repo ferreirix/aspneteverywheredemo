@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model whereyouat.Settings
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -20,12 +21,17 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>Where you at?</h1>
+                <h1>Where you at? YOU ARE @Model.Cloud_Name</h1>
                 <hr>
                 <h2>ASP.NET Core runs on any Cloud!</h2>
                 <!--Put Geo data onClick Ugly/bad oldschool JS Bootstrap JQuery code it works though-->
-                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada">Get Location</a>
+                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
                 <h3 id="demo"></h3>
+                @{
+                    var largeIcon = $"~/img/large/{Model.Cloud_Name}.png";
+                }
+                <h3>You're running ASP.NET on @Model.Cloud_Name!</h3>
+                <img src="@largeIcon" alt="@Model.Cloud_Name" />
                 <p>
                     <strong>Disclaimer:</strong> For this Demo, we are using navigator.geolocation APIs to find your browser's location. Please note we are rounding down your latitude and longitude to just two decimal points to get just a general sense of where you are.
                     <br /><strong>NO EXACT</strong> locations are being stored. Please don't push <i>Get Location</i>  if you don't wish to participate in this demo.

@@ -22,6 +22,8 @@ namespace whereyouat.Controllers
             ViewData["OS"] = Environment.GetEnvironmentVariable("OS") ??
                 Environment.GetEnvironmentVariable("DNX_RUNTIME_ID");
 
+            ViewData["CLOUD_NAME"] = Environment.GetEnvironmentVariable("CLOUD_NAME");
+
             ViewData["PROCESSORARCH"] = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432");
             ViewData["HOSTING_ENVIRONMENT"] = Environment.GetEnvironmentVariable("Hosting:Environment");
 
