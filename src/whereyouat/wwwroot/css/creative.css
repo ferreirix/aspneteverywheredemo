@@ -45,7 +45,11 @@ h6 {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 
+h1 { color: #21A69C; }
+h2,h3 { color: #153542; }
+
 p {
+    color: #153542;
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 1.5;
@@ -189,7 +193,7 @@ header {
 header .header-content {
     position: relative;
     width: 100%;
-    padding: 100px 15px;
+    padding: 25px 15px;
     text-align: center;
 }
 
@@ -208,12 +212,13 @@ header .header-content .header-content-inner p {
     margin-bottom: 50px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(255,255,255,.7);
+    color: #153542;
 }
 
 @media(min-width:768px) {
     header {
-        min-height: 100%;
+        min-height: 55%;
+        max-height: 55%;
     }
 
     header .header-content {
@@ -333,8 +338,8 @@ header .header-content .header-content-inner p {
 
 .btn-default {
     border-color: #fff;
-    color: #222;
-    background-color: #fff;
+    color: #fff;
+    background-color: #21A69C;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;

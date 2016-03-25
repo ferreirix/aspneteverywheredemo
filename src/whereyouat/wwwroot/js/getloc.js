@@ -1,6 +1,5 @@
-﻿var x = document.getElementById("demo");
-
-function getLocation() {
+﻿function getLocation() {
+    var x = document.getElementById("demo");
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
     }
@@ -10,9 +9,9 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-    //x.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
+    var lat = position.coords.latitude.toFixed(1);
+    var lon = position.coords.longitude.toFixed(1);
+    document.getElementById("demo").innerHTML = "You're around Latitude: " + lat + " and Longitude: " + lon;
 
     var xhr = new XMLHttpRequest();
     var params = "latitude=" + lat + "&longitude=" + lon;
