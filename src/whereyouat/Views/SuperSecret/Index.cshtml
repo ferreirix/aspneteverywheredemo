@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+
+    <script type="text/javascript">
+        var map;
+        function getLocations() {
+            var mapOptions = {
+                credentials: "AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt",
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 3
+            };
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
+
+            $.ajax({
+                type: "GET",
+                url: "/locations",
+                dataType: "json",
+                success: function (json) {
+                    console.log(json);
+                    $.each(json, function (i, entry) {
+                        plotEntry(entry.latitude, entry.longitude, entry.cloud_name);
+                    });
+                },
+                error: function (err, status, errortext) {
+                    console.log(errortext);
+                }
+            });
+        }
+
+        function plotEntry(latitude, longitude, cloud) {
+            console.log(latitude + ' ' + longitude);
+
+            //Icons for each Cloud Type
+            var pushpinOptions = { icon: '/img/' + cloud + '.png', width: 32, height: 32 };
+            var pushpin = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(latitude, longitude),
+                pushpinOptions);
+
+            map.entities.push(pushpin);
+        }
+        $().ready(getLocations);
+    </script>
+</head>
+<body>
+    <div id='mapDiv' style="position:relative; width:100%; height:1000px;"></div>
+</body>
+</html>

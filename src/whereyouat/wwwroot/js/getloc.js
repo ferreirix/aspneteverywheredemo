@@ -9,8 +9,8 @@
 }
 
 function showPosition(position) {
-    var lat = position.coords.latitude.toFixed(1);
-    var lon = position.coords.longitude.toFixed(1);
+    var lat = position.coords.latitude.toFixed(2);
+    var lon = position.coords.longitude.toFixed(2);
     document.getElementById("demo").innerHTML = "You're around Latitude: " + lat + " and Longitude: " + lon;
 
     var xhr = new XMLHttpRequest();
