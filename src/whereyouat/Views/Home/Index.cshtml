@@ -9,6 +9,7 @@
     <meta name="author" content="A cast of thousands. Or one.">
     <title>ASP.NET Core in any Cloud</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -21,21 +22,21 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>Where you at? YOU ARE @Model.Cloud_Name</h1>
+                <h1>Where you at?</h1>
                 <hr>
-                <h2>ASP.NET Core runs on any Cloud!</h2>
+                <h3 class ="text-main">ASP.NET Core runs on any Cloud</h3>
                 <!--Put Geo data onClick Ugly/bad oldschool JS Bootstrap JQuery code it works though-->
-                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
                 <h3 id="demo"></h3>
                 @{
                     var largeIcon = $"~/img/Large/{Model.Cloud_Name}.png";
                 }
-                <h3>You're running ASP.NET on @Model.Cloud_Name!</h3>
+                <p class ="text-main"> ASP.NET on @Model.Cloud_Name!</p>
                 <img src="@largeIcon" alt="@Model.Cloud_Name" />
-                <p>
+                <p class ="text-main">
                     <strong>Disclaimer:</strong> For this Demo, we are using navigator.geolocation APIs to find your browser's location. Please note we are rounding down your latitude and longitude to just two decimal points to get just a general sense of where you are.
                     <br /><strong>NO EXACT</strong> locations are being stored. Please don't push <i>Get Location</i>  if you don't wish to participate in this demo.
                 </p>
+                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
             </div>
         </div>
     </header>
@@ -43,15 +44,57 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Be in this silly demo live in the ASP.NET Overview Session at //BUILD</h2>
+                    <h2 class="section-heading">Watch this Demo live at //BUILD</h2>
                     <!--hr class="bg-dark">-->
                     <p class="text-faded"> Build 2016 March 30 - April 1</p>
 
-                    <a href="http://build.microsoft.com/" class="btn btn-default btn-xl"> Watch at http://build.microsoft.com</a>
+                    <a href="http://build.microsoft.com/" class="btn btn-default btn-xl"> Watch Demo</a>
                 </div>
             </div>
         </div>
     </section>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">ASP.NET Core runs on any Cloud </h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>
+                        <h3>Azure ACS </h3>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Amazon EC2 </h3>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Docker</h3>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-google wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3> Google Kubernetes</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
