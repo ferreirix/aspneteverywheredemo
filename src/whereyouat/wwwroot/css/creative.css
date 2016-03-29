@@ -11,7 +11,7 @@ body {
 }
 
 body {
-    font-family: Merriweather,'Helvetica Neue',Arial,sans-serif;
+    font-family: 'Segoe WP SemiLight', Merriweather,'Helvetica Neue',Arial,sans-serif;
 }
 
 hr {
@@ -338,8 +338,8 @@ header .header-content .header-content-inner hr {
 
 .btn-default {
     border-color: #fff;
-    color: #222;
-    background-color: #fff;
+    color: #fff;
+    background-color: #21A69C;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -385,7 +385,8 @@ fieldset[disabled] .btn-default.active {
 }
 
 .btn-default .badge {
-    color: #fff;
+    /*color: #fff;*/
+    color :#21A69C;
     background-color: #222;
 }
 
