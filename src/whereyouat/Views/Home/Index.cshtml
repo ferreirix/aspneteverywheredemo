@@ -16,6 +16,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="stylesheet" href="css/creative.css" type="text/css">
     <script src="js/getloc.js"></script>
+    <script>
+        function thankyou() {
+            document.getElementById("thanks").innerHTML = "Thank You!";
+        }
+    </script>
 </head>
 
 <body id="page-top">
@@ -28,7 +33,7 @@
                 <!--Put Geo data onClick Ugly/bad oldschool JS Bootstrap JQuery code it works though-->
                 <h3 id="demo"></h3>
                 @{
-                    var largeIcon = $"~/img/Large/{Model.Cloud_Name}.png";
+                   var largeIcon = $"~/img/Large/{Model.Cloud_Name}.png";
                 }
                 <p class ="text-main"> ASP.NET on @Model.Cloud_Name!</p>
                 <img src="@largeIcon" alt="@Model.Cloud_Name" />
@@ -38,7 +43,9 @@
                     <strong>Disclaimer:</strong> For this Demo, we are using navigator.geolocation APIs to find your browser's location. Please note we are rounding down your latitude and longitude to just two decimal points to get just a general sense of where you are.
                     <br /><strong>NO EXACT</strong> locations are being stored. Please don't push <i>Get Location</i>  if you don't wish to participate in this demo.
                 </p>
-                <a href="#" onclick="getLocation(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
+                <a href="#" onclick="getLocation(); thankyou(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
+                <br/><br/>
+                <p class="text-acknowledge"  id ="thanks" class ="text-main"></p>
             </div>
         </div>
     </header>
@@ -69,27 +76,28 @@
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>
-                        <h3>Azure ACS </h3>
+                        @*<h3>Azure ACS </h3>*@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Amazon EC2 </h3>
+                        @*<h3>Amazon EC2 </h3>*@
 
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Docker</h3>
+                        <img src="~/img/Docker.svg" width="124" height="84"  />
+                        @*<i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>*@
+                        @*<h3>Docker</h3>*@
 
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-google wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3> Google Kubernetes</h3>
+                        @*<h3> Google Kubernetes</h3>*@
 
                     </div>
                 </div>
