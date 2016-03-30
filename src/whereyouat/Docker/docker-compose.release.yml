@@ -8,5 +8,6 @@ services:
       args:
       - CONTAINER_PORT=${WHEREYOUAT_PORT}
       - SERVER_URLS=http://*:${WHEREYOUAT_PORT}
+    env_file: Develop.env
     ports:
     - "${HOST_PORT}:${WHEREYOUAT_PORT}"
