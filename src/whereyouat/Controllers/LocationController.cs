@@ -63,5 +63,42 @@ namespace whereyouat.Controllers
 
             return Json(data.Select(x=> new { latitude= x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
         }
+        [HttpGet("/cloudcounts")]
+        public async Task<JsonResult> GetCloudCounts()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("locations");
+
+            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+
+            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+
+            var result = 
+                data.GroupBy(x => new { x.cloud_name, x.container })
+                    .Select(g=> new {g.Key.cloud_name, g.Key.container, Count = g.Count()});
+        //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
+            return Json(result);
+        }
+        [HttpGet("/alldata")]
+        public async Task<JsonResult> GetAllData()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("locations");
+
+            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+
+            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+
+            var result = data;
+            //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
+            return Json(result);
+        }
+
     }
 }
