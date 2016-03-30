@@ -157,9 +157,9 @@ $ProjectFolder = Resolve-Path $ProjectFolder
 
 $users = Split-Path $env:USERPROFILE -Parent
 if (!$ProjectFolder.StartsWith($users, [StringComparison]::InvariantCultureIgnoreCase)) {
-   $message  = "VirutalBox by default shares C:\Users as c/Users. If the project is not under c:\Users, please manually add it to the shared folders on VirtualBox. "`
+   $message  = "VirtualBox by default shares C:\Users as c/Users. If the project is not under c:\Users, please manually add it to the shared folders on VirtualBox. "`
              + "Follow instructions from https://www.virtualbox.org/manual/ch04.html#sharedfolders"
-   Write-Warning -Message $message
+   #Write-Warning -Message $message
 }
 else {
    if (!$ProjectFolder.StartsWith($users, [StringComparison]::InvariantCulture)) {
