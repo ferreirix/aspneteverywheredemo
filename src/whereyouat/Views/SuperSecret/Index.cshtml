@@ -16,6 +16,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link rel="stylesheet" href="css/creative.css" type="text/css">
     @* New css to map line 10 -16*@
+    <script>
+        var listoptions = {};
+  
+        function getcloud() {
+           
+            $.ajax({
+                type: "GET",
+                url: "/cloudcounts",
+                dataType: "json",
+                success: function (cloudinfo) {
+                    console.log(cloudinfo);
+                    $.each(cloudinfo, function (i, entry) {
+                        var cloudName = getIdForCloudName(entry.container);
+                        if (!listoptions[cloudName]) { listoptions[cloudName] = "" };
+                        listoptions[cloudName] += '<li class="list-group-item">' + entry.cloud_name + ' ' + entry.container + '  No.Request  ' + entry.Count + '</li>';
+
+                    });
+
+                    for (var prop in listoptions) {
+                        $('#' + prop + "-listview").append(listoptions[prop])
+                    }
+                    function getIdForCloudName(cloudName) {
+                        return cloudName.replace(" ", " ");
+
+                    }
+                },
+
+                error: function (err, status, errortext) {
+                    console.log(errortext);
+                }
+
+            })
+            
+            //Below is dummy data to test cloud_name IT WORKS 
+            //$(function () {
+            //    var mockData = [{ "cloud_name": "AWSEC2", "container": "eb9c7f0158a7", "Count": 12 }, { "cloud_name": "AWSEC2", "container": "4bea00cd7ee4", "Count": 11 }, { "cloud_name": "AWSEC2", "container": "185f65604f23", "Count": 14 }, { "cloud_name": "AzureACS", "container": "5438ec287274", "Count": 69 }, { "cloud_name": "AzureACS", "container": "3f5d680a01c4", "Count": 17 }, { "cloud_name": "AzureACS", "container": "538abe941170", "Count": 12 }, { "cloud_name": "DockerCloud", "container": "whereyouat-web-1", "Count": 2 }, { "cloud_name": "DockerCloud", "container": "whereyouat-web-3", "Count": 2 }];
+
+            //    var lists = {};
+
+            //    $.each(mockData, function (i, entry) {
+            //        var cloudName = getIdForCloudName(entry.cloud_name);
+            //        if (!lists[cloudName]) { lists[cloudName] = ""; }
+            //        lists[cloudName] += '<li class="list-group-item">' + entry.cloud_name + ' ' + entry.container + '  No.Request  ' + entry.Count + '</li>';
+            //    })
+            //    debugger;
+            //    for (var prop in lists) {
+            //        $('#' + prop + "-listview").append(lists[prop]);
+            //    }
+
+            //    function getIdForCloudName(cloudName) {
+            //        return cloudName.replace(" ", "");
+            //    }
+            //})
+
+        }
+        $().ready(getcloud);
+
+    </script>
     <script type="text/javascript">
     
         var map;
@@ -59,5 +117,57 @@
 </head>
 <body>
     <div id='mapDiv' style="position:relative; width:100%; height:1000px;"></div>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i></br></br>
+                        Azure ACS
+                        <ul id="AzureACS-listview" data-role="listview" class="list-group">
+                        </ul>
+
+                        @*<span class="badge">200</span>*@
+                        @*<h3>Azure ACS </h3>*@
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i></br></br>
+                        @*<span class="badge">200</span>*@
+                        @*<h3>Amazon EC2 </h3>*@
+                        <ul id="AWSEC2-listview" data-role="listview" class="list-group">
+                            Amazon
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 text-center">
+                    <div class="service-box">
+                        <img src="~/img/svg/Docker.svg" width="84" height="64" />
+                        </br></br>
+
+                        @*<span class="badge">200</span>*@
+                        <ul id="DockerCloud-listview" data-role="listview" class="list-group">
+                            Docker
+                    
+                        </ul>
+
+                        @*<i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>*@
+                        @*<h3>Docker</h3>*@
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 </body>
 </html>
