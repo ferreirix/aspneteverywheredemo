@@ -89,7 +89,9 @@ namespace whereyouat.Controllers
             return "We're fine. We're all fine here now, thank you... How are you?";
         }
         #endregion
-        
+
+        static Random r = new Random();
+
         #region LoadTesting APIs
         [HttpGet("/addrandomlocation")]
         public async Task<string> AddRandomLocation()
@@ -105,12 +107,10 @@ namespace whereyouat.Controllers
 
             var locEntity = new LocationEntity(cloudName);
             Location location = new Location();
-            Random randomLat = new Random();
-            Random randomLong = new Random();
+            
 
-
-            float rndLat = randomLat.Next(100) - 70;
-            float rndLong = randomLong.Next(0, 300) - 150;
+            float rndLat = r.Next(-90,90);
+            float rndLong = r.Next(-180, 180);
 
             location.latitude = rndLat;
             location.longitude = rndLong;
