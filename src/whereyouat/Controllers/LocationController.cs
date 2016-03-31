@@ -20,8 +20,9 @@ namespace whereyouat.Controllers
         }
 
         [HttpPut("/locations")]
-        public async Task AddLocation([FromForm]Location location)
+        public async Task<string> AddLocation([FromForm]Location location)
         {
+            string cloudName = _settings.Cloud_Name ?? "Unknown";
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
             var tableClient = storageAccount.CreateCloudTableClient();
@@ -30,7 +31,7 @@ namespace whereyouat.Controllers
 
             await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(_settings.Cloud_Name ?? "Unknown");
+            var locEntity = new LocationEntity(cloudName);
 
             locEntity.longitude = location.longitude.ToString();
             locEntity.latitude = location.latitude.ToString();
@@ -40,6 +41,7 @@ namespace whereyouat.Controllers
             TableOperation insertOperation = TableOperation.Insert(locEntity);
 
             await table.ExecuteAsync(insertOperation);
+            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
         }
 
         [HttpGet("/locations")]
@@ -73,8 +75,8 @@ namespace whereyouat.Controllers
 
             var result =
                 data.GroupBy(x => new { x.cloud_name, x.container })
-                    .Select(g => new { g.Key.cloud_name, g.Key.container, Count = g.Count() })
-                    .OrderBy(o => new { o.cloud_name, o.container, o.Count });
+                    //.OrderBy(o => new { o.Key.cloud_name, o.Key.container})
+                    .Select(g => new { g.Key.cloud_name, g.Key.container, Count = g.Count() });
             //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
             return Json(result);
         }
@@ -90,8 +92,9 @@ namespace whereyouat.Controllers
         
         #region LoadTesting APIs
         [HttpGet("/addrandomlocation")]
-        public async Task AddRandomLocation()
+        public async Task<string> AddRandomLocation()
         {
+            string cloudName = _settings.Cloud_Name ?? "LoadTest";
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
             var tableClient = storageAccount.CreateCloudTableClient();
@@ -100,7 +103,7 @@ namespace whereyouat.Controllers
 
             await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(_settings.Cloud_Name ?? "LoadTest");
+            var locEntity = new LocationEntity(cloudName);
             Location location = new Location();
             Random randomLat = new Random();
             Random randomLong = new Random();
@@ -119,6 +122,7 @@ namespace whereyouat.Controllers
             TableOperation insertOperation = TableOperation.Insert(locEntity);
 
             await table.ExecuteAsync(insertOperation);
+            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
         }
 
         [HttpGet("/locationsbycloud")]
