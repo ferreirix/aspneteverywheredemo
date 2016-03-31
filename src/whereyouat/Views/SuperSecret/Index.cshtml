@@ -32,6 +32,7 @@
                         var cloudName = encodeURI(entry.cloud_name);
                         console.log(cloudName);
                         if (!listoptions[cloudName]) { listoptions[cloudName] = "" };
+                        entry.container = entry.container.replace("whereyouat-web", "wya-w");
                         listoptions[cloudName] += '<li class="list-group-item">' + '<b>Container:</b> ' + entry.container + ' <br><b>' + entry.Count + '</b> PUTs received</li>';
 
                     });
