@@ -28,19 +28,21 @@
                 success: function (cloudinfo) {
                     console.log(cloudinfo);
                     $.each(cloudinfo, function (i, entry) {
-                        var cloudName = getIdForCloudName(entry.container);
+                        //changes "foo bar" to "foo%20bar"
+                        var cloudName = encodeURI(entry.cloud_name);
+                        console.log(cloudName);
                         if (!listoptions[cloudName]) { listoptions[cloudName] = "" };
-                        listoptions[cloudName] += '<li class="list-group-item">' + entry.cloud_name + ' ' + entry.container + '  No.Request  ' + entry.Count + '</li>';
+                        listoptions[cloudName] += '<li class="list-group-item">' + '<b>Container:</b> ' + entry.container + ' <br><b>' + entry.Count + '</b> PUTs received</li>';
 
                     });
 
                     for (var prop in listoptions) {
-                        $('#' + prop + "-listview").append(listoptions[prop])
+                        console.log(prop);
+                        //Could use getElementByTagName, but here's how to do it in jQuery as "#foo" doens't work with late eval
+                        var listElement = "ul[id='" + prop + "-listview']";
+                        $(listElement).append(listoptions[prop])
                     }
-                    function getIdForCloudName(cloudName) {
-                        return cloudName.replace(" ", " ");
-
-                    }
+                  
                 },
 
                 error: function (err, status, errortext) {
@@ -90,7 +92,7 @@
                 url: "/locations",
                 dataType: "json",
                 success: function (json) {
-                    console.log(json);
+                    //console.log(json);
                     $.each(json, function (i, entry) {
                         plotEntry(entry.latitude, entry.longitude, entry.cloud_name);
                     });
@@ -102,7 +104,7 @@
         }
 
         function plotEntry(latitude, longitude, cloud) {
-            console.log(latitude + ' ' + longitude);
+            //console.log(latitude + ' ' + longitude);
 
             //Icons for each Cloud Type
             var pushpinOptions = { icon: '/img/' + cloud + '.png', width: 32, height: 32 };
@@ -131,7 +133,7 @@
                     <div class="service-box">
                         <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i></br></br>
                         Azure ACS
-                        <ul id="AzureACS-listview" data-role="listview" class="list-group">
+                        <ul id="Azure%20ACS-listview" data-role="listview" class="list-group">
                         </ul>
 
                         @*<span class="badge">200</span>*@
@@ -144,7 +146,7 @@
                         <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i></br></br>
                         @*<span class="badge">200</span>*@
                         @*<h3>Amazon EC2 </h3>*@
-                        <ul id="AWSEC2-listview" data-role="listview" class="list-group">
+                        <ul id="AWS%20EC2-listview" data-role="listview" class="list-group">
                             Amazon
                         </ul>
                     </div>
@@ -155,7 +157,7 @@
                         </br></br>
 
                         @*<span class="badge">200</span>*@
-                        <ul id="DockerCloud-listview" data-role="listview" class="list-group">
+                        <ul id="Docker%20Cloud-listview" data-role="listview" class="list-group">
                             Docker
                     
                         </ul>
