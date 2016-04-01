@@ -1,7 +1,180 @@
-﻿@model whereyouat.Settings
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> ASP.NET Core Map View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    @* New css to map line 10 -16*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/creative.css" type="text/css">
+    @* New css to map line 10 -16*@
+    <script>
+        var listoptions = {};
+
+        function getcloud() {
+
+            $.ajax({
+                type: "GET",
+                url: "/cloudcounts",
+                dataType: "json",
+                success: function (cloudinfo) {
+                    console.log(cloudinfo);
+                    $.each(cloudinfo, function (i, entry) {
+                        //changes "foo bar" to "foo%20bar"
+                        var cloudName = encodeURI(entry.cloud_name);
+                        console.log(cloudName);
+                        if (!listoptions[cloudName]) { listoptions[cloudName] = "" };
+                        entry.container = entry.container.replace("whereyouat-web", "wya-w");
+                        listoptions[cloudName] += '<li class="list-group-item">' + '<b>Container:</b> ' + entry.container + ' <br><b>' + entry.Count + '</b> PUTs received</li>';
+
+                    });
+
+                    for (var prop in listoptions) {
+                        console.log(prop);
+                        //Could use getElementByTagName, but here's how to do it in jQuery as "#foo" doens't work with late eval
+                        var listElement = "ul[id='" + prop + "-listview']";
+                        $(listElement).append(listoptions[prop])
+                    }
+
+                },
+
+                error: function (err, status, errortext) {
+                    console.log(errortext);
+                }
+
+            })
+
+            //Below is dummy data to test cloud_name IT WORKS
+            //$(function () {
+            //    var mockData = [{ "cloud_name": "AWSEC2", "container": "eb9c7f0158a7", "Count": 12 }, { "cloud_name": "AWSEC2", "container": "4bea00cd7ee4", "Count": 11 }, { "cloud_name": "AWSEC2", "container": "185f65604f23", "Count": 14 }, { "cloud_name": "AzureACS", "container": "5438ec287274", "Count": 69 }, { "cloud_name": "AzureACS", "container": "3f5d680a01c4", "Count": 17 }, { "cloud_name": "AzureACS", "container": "538abe941170", "Count": 12 }, { "cloud_name": "DockerCloud", "container": "whereyouat-web-1", "Count": 2 }, { "cloud_name": "DockerCloud", "container": "whereyouat-web-3", "Count": 2 }];
+
+            //    var lists = {};
+
+            //    $.each(mockData, function (i, entry) {
+            //        var cloudName = getIdForCloudName(entry.cloud_name);
+            //        if (!lists[cloudName]) { lists[cloudName] = ""; }
+            //        lists[cloudName] += '<li class="list-group-item">' + entry.cloud_name + ' ' + entry.container + '  No.Request  ' + entry.Count + '</li>';
+            //    })
+            //    debugger;
+            //    for (var prop in lists) {
+            //        $('#' + prop + "-listview").append(lists[prop]);
+            //    }
+
+            //    function getIdForCloudName(cloudName) {
+            //        return cloudName.replace(" ", "");
+            //    }
+            //})
+
+        }
+        $().ready(getcloud);
+
+    </script>
+    <script type="text/javascript">
+
+        var map;
+        function getLocations() {
+            var mapOptions = {
+                credentials: "AuK13WyKqmzFSUQ4WTbABe-gy2ev2U5tjUni7QWa8tAHmxIcrXC29tydS6qjIwdt",
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 3
+            };
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
+
+            $.ajax({
+                type: "GET",
+                url: "/locations",
+                dataType: "json",
+                success: function (json) {
+                    //console.log(json);
+                    $.each(json, function (i, entry) {
+                        plotEntry(entry.latitude, entry.longitude, entry.cloud_name);
+                    });
+                },
+                error: function (err, status, errortext) {
+                    console.log(errortext);
+                }
+            });
+        }
+
+        function plotEntry(latitude, longitude, cloud) {
+            //console.log(latitude + ' ' + longitude);
+
+            //Icons for each Cloud Type
+            var pushpinOptions = { icon: '/img/' + cloud + '.png', width: 32, height: 32 };
+            var pushpin = new Microsoft.Maps.Pushpin(
+                new Microsoft.Maps.Location(latitude, longitude),
+                pushpinOptions);
+
+            map.entities.push(pushpin);
+        }
+        $().ready(getLocations);
+    </script>
+</head>
+<body>
+    @*<section id="services">
+        <div class="container-fluid">
+            <div id='mapDiv' style="position:relative; width:100%; height:1000px;"></div>
+        </div>
+
+
+    </section>*@
+
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">ASP.NET Core runs on any Cloud </h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div class="service-box">
+                        <img src="~/img/Large/Azure ACS.png" width="64" height="64" />
+                        @*<i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>*@
+                        </br></br>
+                        <h4>Azure ACS</h4>
+                        <ul id="Azure%20ACS-listview" data-role="listview" class="list-group"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="service-box">
+                        @*<i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>*@
+                        <img src="~/img/Large/AWS EC2.png" width="64" height="64" />
+                        </br></br>
+                        @*<span class="badge">200</span>*@
+                        <h4>Amazon EC2 </h4>
+                        <ul id="AWS%20EC2-listview" data-role="listview" class="list-group"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+
+                    <div class="service-box">
+                        <img src="~/img/svg/Docker.svg" width="84" height="64" />
+                        </br></br>
+                        <h4> Docker</h4>
+                        @*<span class="badge">200</span>*@
+                        <ul id="Docker%20Cloud-listview" data-role="listview" class="list-group"></ul>
+
+                        @*<i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>*@
+                        @*<h3>Docker</h3>*@
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>
