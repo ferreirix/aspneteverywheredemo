@@ -1,190 +1,190 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Extensions.OptionsModel;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
-using whereyouat.Models;
-using System.Threading;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using Microsoft.AspNet.Mvc;
+//using Microsoft.Extensions.OptionsModel;
+//using Microsoft.WindowsAzure.Storage;
+//using Microsoft.WindowsAzure.Storage.Table;
+//using whereyouat.Models;
+//using System.Threading;
 
-namespace whereyouat.Controllers
-{
-    public class LocationController : Controller
-    {
-        private Settings _settings;
+//namespace whereyouat.Controllers
+//{
+//    public class LocationController : Controller
+//    {
+//        private Settings _settings;
 
-        public LocationController(IOptions<Settings> options)
-        {
-            _settings = options.Value;
-        }
+//        public LocationController(IOptions<Settings> options)
+//        {
+//            _settings = options.Value;
+//        }
 
-        [HttpPut("/locations")]
-        public async Task<string> AddLocation([FromForm]Location location)
-        {
-            string cloudName = _settings.Cloud_Name ?? "Unknown";
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//        [HttpPut("/locations")]
+//        public async Task<string> AddLocation([FromForm]Location location)
+//        {
+//            string cloudName = _settings.Cloud_Name ?? "Unknown";
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
-            var tableClient = storageAccount.CreateCloudTableClient();
+//            var tableClient = storageAccount.CreateCloudTableClient();
 
-            CloudTable table = tableClient.GetTableReference("locations");
+//            CloudTable table = tableClient.GetTableReference("locations");
 
-            await table.CreateIfNotExistsAsync();
+//            await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(cloudName);
+//            var locEntity = new LocationEntity(cloudName);
 
-            locEntity.longitude = location.longitude.ToString();
-            locEntity.latitude = location.latitude.ToString();
-            locEntity.host = _settings.Docker_Host;
-            locEntity.container = _settings.HostName;
+//            locEntity.longitude = location.longitude.ToString();
+//            locEntity.latitude = location.latitude.ToString();
+//            locEntity.host = _settings.Docker_Host;
+//            locEntity.container = _settings.HostName;
 
-            TableOperation insertOperation = TableOperation.Insert(locEntity);
+//            TableOperation insertOperation = TableOperation.Insert(locEntity);
 
-            await table.ExecuteAsync(insertOperation);
-            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
-        }
+//            await table.ExecuteAsync(insertOperation);
+//            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
+//        }
 
-        [HttpGet("/locations")]
-        public async Task<JsonResult> GetLocations()
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference("locations");
-            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+//        [HttpGet("/locations")]
+//        public async Task<JsonResult> GetLocations()
+//        {
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+//            CloudTable table = tableClient.GetTableReference("locations");
+//            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
 
-            var data = await table.ExecuteQueryAsync(query);
+//            var data = await table.ExecuteQueryAsync(query);
 
-            //var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+//            //var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
 
-            return Json(data.Select(x => new { latitude = x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
-        }
+//            return Json(data.Select(x => new { latitude = x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
+//        }
 
       
 
-        [HttpGet("/cloudcounts")]
-        public async Task<JsonResult> GetCloudCounts()
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference("locations");
-            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+//        [HttpGet("/cloudcounts")]
+//        public async Task<JsonResult> GetCloudCounts()
+//        {
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+//            CloudTable table = tableClient.GetTableReference("locations");
+//            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
 
-            var data = await table.ExecuteQueryAsync(query);
-            //var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+//            var data = await table.ExecuteQueryAsync(query);
+//            //var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
 
-            var result =
-                data.GroupBy(x => new { x.cloud_name, x.container })
-                    //.OrderBy(o => new { o.Key.cloud_name, o.Key.container})
-                    .Select(g => new { g.Key.cloud_name, g.Key.container, Count = g.Count() });
-            //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
-            return Json(result);
-        }
+//            var result =
+//                data.GroupBy(x => new { x.cloud_name, x.container })
+//                    //.OrderBy(o => new { o.Key.cloud_name, o.Key.container})
+//                    .Select(g => new { g.Key.cloud_name, g.Key.container, Count = g.Count() });
+//            //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
+//            return Json(result);
+//        }
 
 
-        #region Testing APIs
-        [HttpGet("/test")]
-        public string GetTestResponse()
-        {
-            return "We're fine. We're all fine here now, thank you... How are you?";
-        }
-        #endregion
+//        #region Testing APIs
+//        [HttpGet("/test")]
+//        public string GetTestResponse()
+//        {
+//            return "We're fine. We're all fine here now, thank you... How are you?";
+//        }
+//        #endregion
 
-        static Random r = new Random();
+//        static Random r = new Random();
 
-        #region LoadTesting APIs
-        [HttpGet("/addrandomlocation")]
-        public async Task<string> AddRandomLocation()
-        {
-            string cloudName = _settings.Cloud_Name ?? "LoadTest";
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//        #region LoadTesting APIs
+//        [HttpGet("/addrandomlocation")]
+//        public async Task<string> AddRandomLocation()
+//        {
+//            string cloudName = _settings.Cloud_Name ?? "LoadTest";
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
-            var tableClient = storageAccount.CreateCloudTableClient();
+//            var tableClient = storageAccount.CreateCloudTableClient();
 
-            CloudTable table = tableClient.GetTableReference("locations");
+//            CloudTable table = tableClient.GetTableReference("locations");
 
-            await table.CreateIfNotExistsAsync();
+//            await table.CreateIfNotExistsAsync();
 
-            var locEntity = new LocationEntity(cloudName);
-            Location location = new Location();
+//            var locEntity = new LocationEntity(cloudName);
+//            Location location = new Location();
             
 
-            float rndLat = r.Next(-90,90);
-            float rndLong = r.Next(-180, 180);
+//            float rndLat = r.Next(-90,90);
+//            float rndLong = r.Next(-180, 180);
 
-            location.latitude = rndLat;
-            location.longitude = rndLong;
-            locEntity.longitude = location.longitude.ToString();
-            locEntity.latitude = location.latitude.ToString();
-            locEntity.host = _settings.Docker_Host;
-            locEntity.container = _settings.HostName;
+//            location.latitude = rndLat;
+//            location.longitude = rndLong;
+//            locEntity.longitude = location.longitude.ToString();
+//            locEntity.latitude = location.latitude.ToString();
+//            locEntity.host = _settings.Docker_Host;
+//            locEntity.container = _settings.HostName;
 
-            TableOperation insertOperation = TableOperation.Insert(locEntity);
+//            TableOperation insertOperation = TableOperation.Insert(locEntity);
 
-            await table.ExecuteAsync(insertOperation);
-            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
-        }
+//            await table.ExecuteAsync(insertOperation);
+//            return string.Format("Cloud: {0} Locatoin:{1}:{2}", cloudName, location.latitude, location.longitude);
+//        }
 
-        [HttpGet("/locationsbycloud")]
-        public async Task<JsonResult> GetLocationsByCloud(string cloudname)
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//        [HttpGet("/locationsbycloud")]
+//        public async Task<JsonResult> GetLocationsByCloud(string cloudname)
+//        {
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+//            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
-            CloudTable table = tableClient.GetTableReference("locations");
+//            CloudTable table = tableClient.GetTableReference("locations");
 
-            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+//            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
 
-            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+//            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
 
-            return Json(data.Where(w => w.cloud_name == cloudname)
-                .Select(x => new { latitude = x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
-        }
+//            return Json(data.Where(w => w.cloud_name == cloudname)
+//                .Select(x => new { latitude = x.latitude, longitude = x.longitude, cloud_name = x.cloud_name }));
+//        }
 
-        [HttpGet("/alldata")]
-        public async Task<JsonResult> GetAllData()
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
+//        [HttpGet("/alldata")]
+//        public async Task<JsonResult> GetAllData()
+//        {
+//            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_settings.LocationConnectionString);
 
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+//            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
-            CloudTable table = tableClient.GetTableReference("locations");
+//            CloudTable table = tableClient.GetTableReference("locations");
 
-            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
+//            TableQuery<LocationEntity> query = new TableQuery<LocationEntity>();
 
-            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
+//            var data = await table.ExecuteQuerySegmentedAsync(query, new TableContinuationToken());
 
-            var result = data;
-            //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
-            return Json(result);
-        }
+//            var result = data;
+//            //var result = data.Select(x => new { could = x.cloud_name, hostname = x.host, timestampe = x.Timestamp, container = x.container, pkey = x.PartitionKey, rkey = x.RowKey });
+//            return Json(result);
+//        }
 
-        #endregion
+//        #endregion
 
-    }
+//    }
 
 
-    public static class CloudHelpers
-    {
-        public static async Task<IList<T>> ExecuteQueryAsync<T>(this CloudTable table, TableQuery<T> query, CancellationToken ct = default(CancellationToken), Action<IList<T>> onProgress = null) where T : ITableEntity, new()
-        {
-            int i = 0;       //may god have mercy on my soul 
-            var items = new List<T>();
-            TableContinuationToken token = null;
-            do
-            {
+//    public static class CloudHelpers
+//    {
+//        public static async Task<IList<T>> ExecuteQueryAsync<T>(this CloudTable table, TableQuery<T> query, CancellationToken ct = default(CancellationToken), Action<IList<T>> onProgress = null) where T : ITableEntity, new()
+//        {
+//            int i = 0;       //may god have mercy on my soul 
+//            var items = new List<T>();
+//            TableContinuationToken token = null;
+//            do
+//            {
                 
-                TableQuerySegment<T> seg = await table.ExecuteQuerySegmentedAsync<T>(query, token);
-                token = seg.ContinuationToken;
-                items.AddRange(seg);
-                if (onProgress != null) onProgress(items);
+//                TableQuerySegment<T> seg = await table.ExecuteQuerySegmentedAsync<T>(query, token);
+//                token = seg.ContinuationToken;
+//                items.AddRange(seg);
+//                if (onProgress != null) onProgress(items);
                 
-                i++;
-            } while (i < 20 && token != null && !ct.IsCancellationRequested);
+//                i++;
+//            } while (i < 20 && token != null && !ct.IsCancellationRequested);
 
-            return items;
-        }
+//            return items;
+//        }
 
-    }
-}
+//    }
+//}
