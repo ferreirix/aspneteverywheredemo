@@ -12,7 +12,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "Hosting:Environment": "Development"
+        "Hosting:Environment": "Development",
+        "LocationConnectionString": "DefaultEndpointsProtocol=https;AccountName=whereyouatdata;AccountKey=QlOAkdXIJbeKy7esLpM6zKUQtpBhZed4el1PV1X2ovBawJg3O7G5HxVDtnGfYOOIKlosAwK6i2dDTJzEpeToKw==;BlobEndpoint=https://whereyouatdata.blob.core.windows.net/;TableEndpoint=https://whereyouatdata.table.core.windows.net/;QueueEndpoint=https://whereyouatdata.queue.core.windows.net/;FileEndpoint=https://whereyouatdata.file.core.windows.net/"
       }
     },
     "web": {
