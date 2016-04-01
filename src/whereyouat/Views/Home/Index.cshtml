@@ -32,12 +32,10 @@
                 <h3 class ="text-main">ASP.NET Core runs on any Cloud</h3>
                 <!--Put Geo data onClick Ugly/bad oldschool JS Bootstrap JQuery code it works though-->
                 <h3 id="demo"></h3>
-                @{
-                   var largeIcon = $"~/img/Large/{Model.Cloud_Name}.png";
-
-                }
                 <p class ="text-main"> ASP.NET on @Model.Cloud_Name!</p>
-                <img src="@largeIcon" alt="@Model.Cloud_Name" />
+                <img src="~/img/Large/Azure ACS.png" />
+                <img src="~/img/Large/AWS EC2.png" />
+                <img src="~/img/Large/Docker Cloud.png" />
                 <br/>
                 <br/>
                 <p class ="text-main">
