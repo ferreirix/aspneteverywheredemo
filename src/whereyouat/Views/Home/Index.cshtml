@@ -41,12 +41,14 @@
                 <br/>
                 <br/>
                 <p class ="text-main">
-                    <strong>Disclaimer:</strong> For this Demo, we are using navigator.geolocation APIs to find your browser's location. Please note we are rounding down your latitude and longitude to just two decimal points to get just a general sense of where you are.
-                    <br /><strong>NO EXACT</strong> locations are being stored. Please don't push <i>Get Location</i>  if you don't wish to participate in this demo.
+                    Thank you for being a part of the Where You At Demo!  This Demo has ended but here’s<a href=” https//channel9.msdn.com/Events/Build/2016/B810”> how it went</a>. Code and blog post coming soon.  Remember ASP.NET Core runs on any cloud!
+                    @*<strong>Disclaimer:</strong> For this Demo, we are using navigator.geolocation APIs to find your browser's location. Please note we are rounding down your latitude and longitude to just two decimal points to get just a general sense of where you are.
+                    <br /><strong>NO EXACT</strong> locations are being stored. Please don't push <i>Get Location</i>  if you don't wish to participate in this demo.*@
                 </p>
-                <a href="#" onclick="getLocation(); thankyou(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>
+                @*<a href="#" onclick="getLocation(); thankyou(); return false;" class="btn btn-default btn-xl wow tada">Get my Location</a>*@
+                <a href="#map" class="btn btn-default btn-xl wow tada"> See the Results</a>
                 <br/><br/>
-                <p class="text-acknowledge"  id ="thanks" class ="text-main"></p>
+                <p class="text-acknowledge"  id ="thanks" class ="text-main"> Thank you!</p>
             </div>
         </div>
     </header>
@@ -54,11 +56,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Watch this Demo live at //BUILD</h2>
+                    <h2 class="section-heading"> The World View </h2>
                     <!--hr class="bg-dark">-->
-                    <p class="text-faded"> Build 2016 March 30 - April 1</p>
-
-                    <a href="http://build.microsoft.com/" class="btn btn-default btn-xl"> Watch Demo</a>
+                    <p class="text-faded"> Your Cloud. Your  ASP.NET Core Application </p>
+                    <img src="~/img/map/whereyouatmap.png" class="img-responsive"/>
+                    <br /><br/>
+                    <a href="#services" class="btn btn-default btn-xl">  How We Did It </a>
                 </div>
             </div>
         </div>
@@ -67,41 +70,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">ASP.NET Core runs on any Cloud </h2>
+                    <h2 class="section-heading"> Code and Blog Posts Coming Soon</h2>
                     <hr class="primary">
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
+                <div class="col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>
-                        @*<h3>Azure ACS </h3>*@
+                        @*<i class="fa fa-4x fa-windows wow bounceIn text-primary"></i>*@
+                        <i class="fa fa-4x fa-github wow bounceIn text-primary"></i>
+                    
+                        <h3>Code </h3>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
+                <div class="col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        @*<h3>Amazon EC2 </h3>*@
+                        @*<i class="fa fa-4x fa-amazon wow bounceIn text-primary" data-wow-delay=".1s"></i>*@
+                        <i class="fa fa-4x fa-pencil-square-o wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                   
+                        <h3>Posts </h3>
 
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <img src="~/img/svg/Docker.svg" width="84" height="64"  />
-                        @*<i class="fa fa-4x fa-anchor wow bounceIn text-primary" data-wow-delay=".2s"></i>*@
-                        @*<h3>Docker</h3>*@
-
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-google wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        @*<h3> Google Kubernetes</h3>*@
-
-                    </div>
-                </div>
+                
+                
             </div>
         </div>
     </section>
